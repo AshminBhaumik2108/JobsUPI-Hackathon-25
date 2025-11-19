@@ -1,7 +1,8 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+"""Application entrypoint for the JobsUPI Agent Service."""
 
-from fastapi import Request
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from loguru import logger
 
 from app.config import get_settings
 from app.core.exceptions import register_exception_handlers
@@ -38,4 +39,8 @@ app.include_router(api_router)
 @app.get("/", tags=["root"])
 @limiter.limit(settings.rate_limit_default)
 async def root(request: Request) -> dict[str, str]:
+    """Simple endpoint for quick verifications and smoke tests."""
+    logger.bind(request_id=request.headers.get("X-Request-ID", "-")).info(
+        "Root endpoint invoked from {}", request.client.host if request.client else "unknown"
+    )
     return {"message": "JobsUPI agent service is running"}

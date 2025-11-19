@@ -1,9 +1,14 @@
+"""Centralized application settings loaded via pydantic-settings."""
+
 from functools import lru_cache
+
 from pydantic import Field, HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """Pydantic model describing every environment variable the service depends on."""
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", case_sensitive=True)
 
     env: str = Field(default="development")
@@ -32,4 +37,5 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    """Return a cached Settings instance to avoid reparsing env vars."""
     return Settings()

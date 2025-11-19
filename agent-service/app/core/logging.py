@@ -1,3 +1,5 @@
+"""Utilities for configuring Loguru logging and per-request correlation IDs."""
+
 from contextvars import ContextVar
 from typing import Any
 
@@ -7,14 +9,17 @@ _request_id_ctx_var: ContextVar[str | None] = ContextVar("request_id", default=N
 
 
 def set_request_id(request_id: str | None) -> None:
+    """Attach the provided request ID to the current async context."""
     _request_id_ctx_var.set(request_id)
 
 
 def get_request_id() -> str | None:
+    """Return the request ID associated with the current async context."""
     return _request_id_ctx_var.get()
 
 
 def configure_logging(level: str = "INFO") -> None:
+    """Configure Loguru with a consistent format and desired log level."""
     logger.remove()
     logger.add(
         sink=lambda msg: print(msg, end=""),
@@ -26,6 +31,8 @@ def configure_logging(level: str = "INFO") -> None:
 
 
 class RequestIDFilter:
+    """Helper that can be used when extra request ID propagation is required."""
+
     def __init__(self) -> None:
         self._token: ContextVar[Any] | None = None
 
@@ -34,4 +41,5 @@ class RequestIDFilter:
 
 
 def log_message(message: str) -> None:
+    """Log an informational message with the bound request ID, if present."""
     logger.bind(request_id=get_request_id() or "-").info(message)
