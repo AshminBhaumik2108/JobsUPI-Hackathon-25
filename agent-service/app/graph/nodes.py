@@ -16,65 +16,65 @@ from app.services.llm import get_llm
 # Placeholder catalog data until the core-service API is wired in.
 ROLE_LIBRARY: List[Dict] = [
     {
-        "role_id": "delivery-executive",
-        "title": "Delivery Executive",
-        "skills": {"must_have": {"transport": 1, "navigation": 1}, "nice_to_have": {"customer": 1}},
-        "personality": ["extrovert", "customer-first"],
-        "environment": {"mobility": "high"},
-        "roadmap": [
-            {
-                "title": "Sign up on delivery platforms",
-                "description": "Complete KYC and onboarding for major delivery apps.",
-                "duration_weeks": 1,
-                "resources": ["Delivery app onboarding guides"],
-            },
-            {
-                "title": "Navigation mastery",
-                "description": "Practice optimal routing and time management.",
-                "duration_weeks": 2,
-                "resources": ["Google Maps tutorials", "Local route practice"],
-            },
-        ],
-    },
-    {
-        "role_id": "warehouse-associate",
-        "title": "Warehouse Associate",
-        "skills": {"must_have": {"inventory": 1}, "nice_to_have": {"forklift": 1}},
-        "personality": ["detail-oriented"],
+        "role_id": "mern-support-intern",
+        "title": "MERN Support Intern",
+        "skills": {"must_have": {"javascript": 1, "html": 1}, "nice_to_have": {"mongodb": 1}},
+        "personality": ["detail-oriented", "curious"],
         "environment": {"mobility": "low"},
         "roadmap": [
             {
-                "title": "Warehouse safety",
-                "description": "Complete safety and handling basics.",
-                "duration_weeks": 1,
-                "resources": ["OSHA basic guide"],
+                "title": "Frontend refresh",
+                "description": "Revisit React + Tailwind basics to support UI fixes in the MERN stack portal.",
+                "duration_weeks": 2,
+                "resources": ["JobsUPI React snippets", "Vite/Tailwind crash course"],
             },
             {
-                "title": "Inventory systems",
-                "description": "Learn to operate handheld scanners and WMS.",
-                "duration_weeks": 3,
-                "resources": ["WMS tutorials", "Scanner practice"],
+                "title": "API ticket drills",
+                "description": "Shadow senior devs to triage Express/Mongo API bugs and log AI-agent issues.",
+                "duration_weeks": 2,
+                "resources": ["Postman collections", "GitHub issue templates"],
             },
         ],
     },
     {
-        "role_id": "field-technician",
-        "title": "Field Technician",
-        "skills": {"must_have": {"electrical": 1}, "nice_to_have": {"customer": 1}},
-        "personality": ["hands-on", "problem-solver"],
+        "role_id": "ai-data-ops-associate",
+        "title": "AI Data Ops Associate",
+        "skills": {"must_have": {"excel": 1, "python": 1}, "nice_to_have": {"langchain": 1}},
+        "personality": ["analytical", "process-driven"],
         "environment": {"mobility": "medium"},
         "roadmap": [
             {
-                "title": "Technical refresher",
-                "description": "Brush up on basic electrical and diagnostic skills.",
-                "duration_weeks": 4,
-                "resources": ["Skill India courses", "YouTube repair playlists"],
+                "title": "Labeling playbook",
+                "description": "Learn annotation SOPs for Gemini/LangGraph training data.",
+                "duration_weeks": 2,
+                "resources": ["Label Studio basics", "QA checklist"],
             },
             {
-                "title": "Customer etiquette",
-                "description": "Practice communication for on-site service calls.",
+                "title": "Ops automations",
+                "description": "Practice writing Python notebooks that push clean data into Mongo/Redis caches.",
+                "duration_weeks": 3,
+                "resources": ["FastAPI ops guide", "LangChain tooling demos"],
+            },
+        ],
+    },
+    {
+        "role_id": "edge-ai-field-tech",
+        "title": "Edge AI Field Technician",
+        "skills": {"must_have": {"networking": 1}, "nice_to_have": {"iot": 1}},
+        "personality": ["hands-on", "problem-solver"],
+        "environment": {"mobility": "high"},
+        "roadmap": [
+            {
+                "title": "Device commissioning",
+                "description": "Shadow senior techs to deploy IoT sensors that sync with MERN dashboards.",
+                "duration_weeks": 3,
+                "resources": ["Hardware checklists", "Edge deployment SOP"],
+            },
+            {
+                "title": "AI health checks",
+                "description": "Use LangSmith traces and FastAPI probes to validate on-site models.",
                 "duration_weeks": 2,
-                "resources": ["Customer service scripts"],
+                "resources": ["LangGraph observability guide"],
             },
         ],
     },
@@ -169,12 +169,17 @@ def _heuristic_recommendations(normalized: dict) -> List[RoleRecommendation]:
         mobility_penalty = 0 if role.get("environment", {}).get("mobility") == preferred_mobility else 1
 
         score = max(0.1, (skill_overlap * 0.6 + personality_overlap * 0.3) - mobility_penalty * 0.2)
+        rationale = (
+            "Suggested as a MERN + AI support role that builds on {} skills while exposing you to LangGraph ops."
+        ).format(
+            ", ".join(sorted(skills)) or "foundational"
+        )
         recommendations.append(
             RoleRecommendation(
                 role_id=role["role_id"],
                 title=role["title"],
                 match_score=round(min(score, 1.0), 2),
-                rationale="Fallback heuristic rationale",
+                rationale=rationale,
             )
         )
     recommendations.sort(key=lambda r: r["match_score"], reverse=True)

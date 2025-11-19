@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "echo \"lint placeholder\"",
-    "test": "echo \"test placeholder\""
+    "test": "echo \"test placeholder\"",
+    "seed": "ts-node scripts/seed.ts"
   },
   "keywords": [],
   "author": "",
