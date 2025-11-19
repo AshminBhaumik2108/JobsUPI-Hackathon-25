@@ -1,0 +1,40 @@
+JobsUPI Hackathon Portal – Project Approach & Purpose
+=====================================================
+
+Section A – Overall Approach
+----------------------------
+1. Foundation & Environments
+   • Mirror the plan in `01_environment_and_repo.md`: set up Python FastAPI service, Node/Express core, and Vite React client with synced .env examples, lint/test placeholders, and shared repo skeleton.  Ensures consistent tooling across contributors.
+
+2. Agent Service Bootstrap
+   • From `02_agent_base_api.md`: configure FastAPI entry point, Pydantic settings, health/readiness checks, Loguru logging, and SlowAPI rate limiting so LangGraph integration has a stable base.
+
+3. LangGraph Pipeline Design
+   • Following `03_langgraph_pipeline.md`: define state schema (skills, interests, constraints, history, shortlist, roadmap), implement profile/role/roadmap/summary nodes, wire deterministic transitions, and register LangSmith tracing for observability.
+
+4. Agent-Facing Endpoints
+   • As in `04_agent_endpoints.md`: expose `/agents/profile`, `/agents/role-fit`, `/agents/roadmap`; enforce schemas, propagate trace IDs, and integrate Gmail helper (dry-run) for summaries.
+
+5. Core Data Models & Routes
+   • Reference `05_core_models_and_db.md` and `06_core_routes.md`: set up MongoDB with retry/health logging, create Mongoose models (UserProfile, RoleTemplate, Roadmap, JobPosting), seed demo data, and expose CRUD + query routes with validation, JWT auth, and logging.
+
+6. Contract Validation
+   • `07_contract_validation.md` mandates documented DTOs, shared JSON schemas, contract tests, and CI checks so agent, core, and client payloads stay aligned.
+
+7. Frontend Setup & Features
+   • `08_frontend_setup.md` + `09_frontend_features.md`: bootstrap Vite/React/Tailwind, create shared context and API clients, then implement profile wizard, role recommendations, roadmap timeline, jobs board, dashboard + Gmail CTA with React Query tests and accessibility polish.
+
+8. Integration, Regression, and Delivery
+   • `10_integration_regression.md` drives E2E orchestration (Mongo + both services + client), scripted runs, Playwright/Cypress tests, load tests, and log correlation.  `11_documentation_delivery.md` covers README, one-pager, troubleshooting, demo assets, and final repo hygiene.
+
+Section B – Purpose & Impact
+----------------------------
+1. Purpose
+   • Provide low-literacy-friendly, conversational guidance so Indian job seekers can confidently identify suitable roles, understand upskilling steps, and act on curated job leads without navigating fragmented systems.
+
+2. How It Helps
+   • Conversational intake removes form fatigue and adapts to local languages.
+   • AI scoring + LangGraph reasoning tie personal constraints (location, education, salary, family obligations) to realistic roles.
+   • Personalized roadmaps convert recommendations into concrete learning milestones, reducing drop-off.
+   • Integrated job listings and Gmail-ready summaries let seekers immediately pursue opportunities or share plans with mentors, NGOs, or hiring partners.
+   • Overall, the platform shortens the path from self-assessment to employment, supporting Bharat’s diverse workforce with accessible, data-backed guidance.
