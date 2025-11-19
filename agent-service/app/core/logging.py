@@ -21,6 +21,8 @@ def get_request_id() -> str | None:
 def configure_logging(level: str = "INFO") -> None:
     """Configure Loguru with a consistent format and desired log level."""
     logger.remove()
+    # Ensure a default request_id is always present to avoid KeyError in formatters.
+    logger.configure(extra={"request_id": "-"})
     logger.add(
         sink=lambda msg: print(msg, end=""),
         level=level.upper(),

@@ -9,6 +9,7 @@ from app.core.exceptions import register_exception_handlers
 from app.middleware.rate_limit import init_rate_limiter, limiter
 from app.middleware.request_context import RequestContextMiddleware
 from app.routers import api_router
+from app.routers import agents as agents_router
 
 settings = get_settings()
 
@@ -34,6 +35,7 @@ register_exception_handlers(app)
 app.state.settings = settings
 
 app.include_router(api_router)
+app.include_router(agents_router.router)
 
 
 @app.get("/", tags=["root"])

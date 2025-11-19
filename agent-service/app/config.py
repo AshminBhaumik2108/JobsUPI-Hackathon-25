@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     gemini_model_name: str = Field("gemini-1.5-flash", alias="GEMINI_MODEL_NAME")
 
     langchain_api_key: str | None = Field(None, alias="LANGCHAIN_API_KEY")
-    langsmith_api_key: str = Field(..., alias="LANGSMITH_API_KEY")
-    langsmith_project: str = Field(..., alias="LANGSMITH_PROJECT")
+    langsmith_api_key: str | None = Field(None, alias="LANGSMITH_API_KEY")
+    langsmith_project: str | None = Field(None, alias="LANGSMITH_PROJECT")
 
     mongo_uri: str | None = Field(None, alias="MONGO_URI")
     redis_url: str | None = Field(None, alias="REDIS_URL")
@@ -33,6 +33,11 @@ class Settings(BaseSettings):
 
     rate_limit_default: str = Field("60/minute", alias="RATE_LIMIT_DEFAULT")
     log_level: str = Field("INFO", alias="LOG_LEVEL")
+
+    # Optional LangChain/LangSmith settings
+    langchain_tracing_v2: str | None = Field(None, alias="LANGCHAIN_TRACING_V2")
+    langchain_endpoint: str | None = Field(None, alias="LANGCHAIN_ENDPOINT")
+    langchain_project: str | None = Field(None, alias="LANGCHAIN_PROJECT")
 
 
 @lru_cache
