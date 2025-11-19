@@ -1,0 +1,33 @@
+# Python
+agent-service/.venv/
+__pycache__/
+*.pyc
+
+# Node / React
+node_modules/
+dist/
+build/
+.next/
+.vite/
+
+# Env files
+.env
+.env.*
+*/.env
+*/.env.*
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage / Reports
+coverage/
+*.lcov
+
+# Editor
+.vscode/
+.idea/
