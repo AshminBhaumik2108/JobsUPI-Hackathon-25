@@ -13,9 +13,9 @@ class Settings(BaseSettings):
 
     env: str = Field(default="development")
 
-    google_api_key: str = Field(..., alias="GOOGLE_API_KEY")
-    google_project_id: str = Field(..., alias="GOOGLE_PROJECT_ID")
-    gemini_model_name: str = Field("gemini-1.5-flash", alias="GEMINI_MODEL_NAME")
+    google_api_key: str = Field(..., alias="GEMINI_API_KEY")
+    google_project_id: str | None = Field(None, alias="GOOGLE_PROJECT_ID")
+    gemini_model_name: str = Field("models/gemini-2.5-flash", alias="GEMINI_MODEL_NAME")
 
     langchain_api_key: str | None = Field(None, alias="LANGCHAIN_API_KEY")
     langsmith_api_key: str | None = Field(None, alias="LANGSMITH_API_KEY")
